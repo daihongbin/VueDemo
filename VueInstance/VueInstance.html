@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue实例</title>
+
+</head>
+<body>
+
+    <div id="app">
+        <p>{{ foo }}</p>
+        <!--这里的foo不会更新-->
+        <button v-on:click="foo = 'baz'">Change it</button>
+    </div>
+
+<script src="../vue.js"></script>
+<script>
+    //创建实例
+    var vm = new Vue({
+        //选项
+    });
+
+    //数据与方法
+    //我们的数据对象
+    var data = {a:1};
+
+    //该对象被加入到一个Vue实例中
+    var wm = new Vue({
+        data : data
+    });
+
+    //获得这个实例上的属性
+    //返回源数据中对应中字段
+    vm.a = data.a;
+
+    //设置属性也会影响到原始数据
+    vm.a = 2;
+    //data.a // => 2
+
+    //反之亦然
+    data.a = 2;
+    //vm.a // => 2
+    //数据改变时，视图会重新进行渲染
+
+    vm.b = "1";//后面添加的属性不会触发视图更新
+
+    //可以一开始就进行声明，这样后续也会进行更新视图
+    var data2 = {
+        newTodoText:"",
+        visitCount:0,
+        hideCompletedTodos:false,
+        todos:[],
+        error:null
+    };
+
+    //使用Object.freeze()会阻止修改现有的属性
+    var obj = {
+        foo:'bar'
+    }
+
+    Object.freeze(obj);
+
+    new Vue({
+        el:"#app",
+        data:obj
+    });
+
+    //除了数据属性，Vue实例还暴露了一些有用的实例属性和方法，它们都有前缀s
+    var data3 = {a:1};
+    var vm3 = new Vue({
+        el:"#example",
+        data:data
+    });
+
+    vm3.$data === data3;
+    vm3.$el === document.getElementById("example");
+
+    //$watch是一个实例方法
+    vm3.$watch('a',function (newValue,oldValue) {
+        //zhege回调将在'vm3.a'改变后调用
+    });
+
+    //实例生命周期钩子
+    new Vue({
+       data:{
+           a:1
+       },
+        created:function () {
+            //this 指向 vm 实例
+            console.log('a is:' + this.a)
+        }
+    });
+</script>
+</body>
+</html>
