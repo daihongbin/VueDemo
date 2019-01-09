@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板语法</title>
+</head>
+<body>
+    <!--文本-->
+    <div id="app-1">
+        <span>Message:{{ msg }}</span>
+        <br/>
+        <!--使用v-once进行一次性插值-->
+        <span v-once>这个将不会改变：{{ msg }}</span>
+    </div>
+    <hr/>
+
+    <!--原始html-->
+    <div id="app-2">
+        <p>Using mustaches: {{ rawHtml }}</p>
+        <p>Using v-html directive:<span v-html="rawHtml"></span></p>
+    </div>
+    <hr/>
+
+    <!--特性-->
+    <div id="app-3">
+        <div v-bind:id="dynamicId"></div>
+        <button v-bind:disabled="isButtonDisabled">Button</button>
+    </div>
+    <hr/>
+
+
+
+    <script src="../vue.js"></script>
+    <script>
+        //文本
+        var app = new Vue({
+            el:"#app-1",
+            data:{
+                msg:"12313"
+            }
+        });
+
+        //原始html
+        var app2 = new Vue({
+            el:"#app-2",
+            data:{
+                rawHtml:'<span style="color:red">This is should be red</span>'
+            }
+        });
+
+        //特性，html节点的属性
+        var app3 = new Vue({
+            el:"#app-3",
+            data:{
+                dynamicId:"1",
+                isButtonDisabled:false
+            }
+        });
+    </script>
+</body>
+</html>
