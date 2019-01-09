@@ -28,7 +28,68 @@
     </div>
     <hr/>
 
+    <!--使用JavaScript表达式-->
+    <div id="app-4">
+        <!--完全的javascript表达式支持-->
+        {{ number + 1 }}
+        <br/>
 
+        {{ ok ? 'yes' : 'no' }}
+        <br/>
+
+        {{ message.split('').reverse().join('') }}
+        <br/>
+
+        <div v-bind:id="'list-' + id"></div>
+        <br/>
+
+        <!--这是语句，不是表达式。只能绑定单个表达式，下面的例子不会生效-->
+
+        <!--
+        {{ var a = 1 }}
+
+        {{ if (ok) { return message } }}-->
+    </div>
+    <hr/>
+
+    <!--指令-->
+    <div id="app-5">
+        <p v-if="seen">现在你看到我了</p>
+
+        <a v-bind:href="url">{{ url }}</a>
+        <br/>
+
+        <a v-on:click="doSomething">做些事情</a>
+        <br/>
+
+        <!--prevent表示提交事件不再重载页面-->
+        <form v-on:submit.prevent="onSubmit">
+            <input type="text" name="name" placeholder="你的名字">
+            <input type="submit" name="submitButton">
+        </form>
+    </div>
+    <hr/>
+
+    <!--v-bind缩写-->
+    <div id="app-6">
+        <!--完整语法-->
+        <a v-bind:href="url">...</a>
+        <br/>
+
+        <!--缩写-->
+        <a :href="url">...</a>
+    </div>
+    <hr/>
+
+    <!--v-on缩写-->
+    <div id="app-7">
+        <!--完整语法-->
+        <a v-on:click="doSomething">...</a>
+        <br/>
+
+        <!--缩写-->
+        <a @click="doSomething">...</a>
+    </div>
 
     <script src="../vue.js"></script>
     <script>
@@ -54,6 +115,56 @@
             data:{
                 dynamicId:"1",
                 isButtonDisabled:false
+            }
+        });
+
+        //javascript表达式
+        var app4 = new Vue({
+           el:"#app-4",
+           data:{
+               number:1,
+               ok:false,
+               message:"1231313123",
+               id : "1",
+               ok : true
+           }
+        });
+
+        /*
+        var div = document.getElementById('list-' + app4.id);
+        alert(div.innerHTML);
+        */
+
+        //指令
+        var app5 = new Vue({
+            el:"#app-5",
+            data:{
+                seen:true,
+                url:"www.baidu.com",
+                doSomething:function () {
+                    alert(12313);
+                },
+                onSubmit:function () {
+                    alert("提交");
+                }
+            }
+        });
+
+        //v-bind缩写
+        var app6 = new Vue({
+            el:"#app-6",
+            data:{
+                url:"www.baidu.com"
+            }
+        });
+
+        //v-on缩写
+        var app7 = new Vue({
+            el:"#app-7",
+            data:{
+                doSomething:function () {
+                    alert("缩写");
+                }
             }
         });
     </script>
