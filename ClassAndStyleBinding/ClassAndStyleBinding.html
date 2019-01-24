@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Class和Style绑定</title>
+    <style>
+        .active{
+            width:100px;
+            height: 20px;
+            background-color: red;
+        }
+
+        .static{
+            width: 100px;
+            height: 5px;
+            border-top: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!--给v-bind:class 一个对象，以动态的切换class-->
+        <!--active这个class是否存在取决于isActive是否为true-->
+        <div v-bind:class="{ active:isActive,'text-danger' : hasError }"></div>
+        <br/>
+
+        <!--v-bind:class也可以与普通的class属性共存-->
+        <div class="static" v-bind:class="{ active:isActive,'text-danger':hasError}"></div>
+        <br/>
+    </div>
+    <hr/>
+    <br/>
+
+    <!--绑定的数据对象不必内联定义在classObject-->
+    <div id="app-1">
+        <div v-bind:class="classObject"></div>
+    </div>
+    <hr/>
+    <br/>
+
+    <!--绑定一个返回对象的计算属性-->
+    <div id="app-2">
+        <div v-bind:class="classObject">
+        </div>
+    </div>
+
+    <script src="../vue.js" type="text/javascript"></script>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                isActive:true,
+                hasError:false
+            }
+        });
+
+        var app1 = new Vue({
+            el:"#app-1",
+            data:{
+                classObject:{
+                    active:true,
+                    'text-danger':false
+                }
+            }
+        });
+
+        var app2 = new Vue({
+            el:"#app-2",
+            data:{
+                isActive: true,
+                error:null
+            },
+            computed:{
+                classObject: function () {
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger':this.error && this.error.type == 'fatal'
+                    };
+                }
+            }
+        });
+    </script>
+</body>
+</html>
